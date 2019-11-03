@@ -17,10 +17,10 @@ class ClassTest < Minitest::Test
   def test_it_can_create_offsets
     optional_dt = '040895'
     @offset.create_offsets(optional_dt)
-    assert_equal 1, @offset.a_digit
-    assert_equal 0, @offset.b_digit
-    assert_equal 2, @offset.c_digit
-    assert_equal 5, @offset.d_digit
+    assert_equal 1, @offset.a_offset
+    assert_equal 0, @offset.b_offset
+    assert_equal 2, @offset.c_offset
+    assert_equal 5, @offset.d_offset
 
   end
 
@@ -29,6 +29,6 @@ class ClassTest < Minitest::Test
   end
 
   def test_last_four
-    assert_equal 1025, @offset.get_last_four('1672401025')
+    assert_equal "1025", @offset.get_last_four('1672401025')
   end
 end

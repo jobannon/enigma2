@@ -3,6 +3,8 @@ require 'time'
 require 'pry'
 
 class Offset
+  attr_reader :a_offset, :b_offset, :c_offset, :d_offset
+
   def initialize
   end
 
@@ -10,7 +12,10 @@ class Offset
     # date = Time.now.strftime("%d%m%Y")
     squared_date = square_date(optional_date).to_s
     trimmed_squared_date = get_last_four(squared_date)
-    binding.pry
+    @a_offset = trimmed_squared_date[0].to_i
+    @b_offset = trimmed_squared_date[1].to_i
+    @c_offset = trimmed_squared_date[2].to_i
+    @d_offset = trimmed_squared_date[3].to_i
   end
 
   def square_date(date)
@@ -18,7 +23,9 @@ class Offset
   end
 
   def get_last_four(squared_date)
-    squared_date[squared_date.length - 4...squared_date.length].to_i
+    squared_date[squared_date.length - 4...squared_date.length]
   end
+
+
 
 end
