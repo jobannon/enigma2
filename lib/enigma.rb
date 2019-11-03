@@ -1,4 +1,5 @@
 require 'date'
+require_relative './../test/test_helper'
 class Engima
   #class to encrypt and decrypt
   def initialize
@@ -19,6 +20,12 @@ class Engima
   end
 
   def get_rand
+    rand_num_array = []
+    5.times do
+      rand_num = rand(5)
+      rand_num_array << rand_num
+    end
+    rand_num_array
   end
 
   def get_last_four

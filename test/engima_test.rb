@@ -44,8 +44,9 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_get_rand
-    rand_num1 = mock(12345)
-    @enigma.stubs(:get_rand).returns(12345)
+    # rand_num1 = mock("12345")
+    @enigma.expects(:get_rand).returns(12345)
+    assert_equal 12345, @enigma.get_rand
   end
 
 end
