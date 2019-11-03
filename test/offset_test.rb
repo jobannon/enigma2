@@ -28,5 +28,7 @@ class ClassTest < Minitest::Test
     assert_equal 1672401025, @offset.square_date('040895')
   end
 
-  
+  def test_last_four
+    assert_equal 1025, @offset.get_last_four('1672401025')
+  end
 end
