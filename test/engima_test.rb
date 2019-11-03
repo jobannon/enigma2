@@ -1,6 +1,4 @@
-require 'minitest'
-require 'minitest/pride'
-require 'minitest/autorun'
+require_relative './test_helper'
 require_relative './../lib/enigma'
 
 class EnigmaTest < Minitest::Test
@@ -14,6 +12,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_encrypt
+    skip
     expected ={
       encryption: "keder ohulw",
       key: "02715",
@@ -25,13 +24,13 @@ class EnigmaTest < Minitest::Test
     #test with todays date
     expectedtoday = {
       }
-    assert_equal expectedtoday, enigma.encrypt("hello world", "02715")
+    assert_equal expectedtoday, @enigma.encrypt("hello world", "02715")
 
     #test with random key and todays date
     expected_today_and_random = {
 
     }
-    assert_equal expected_today_and_random, enigma.encrypt("hello world")
+    assert_equal expected_today_and_random, @enigma.encrypt("hello world")
   end
 
   def test_decrypt
@@ -42,6 +41,11 @@ class EnigmaTest < Minitest::Test
       date: "040895"
     }
     assert_equal expected, @enigma.decrypt("keder ohulw", "02715", "040895")
+  end
+
+  def test_get_rand
+    rand_num1 = mock(12345)
+    @enigma.stubs(:get_rand).returns(12345)
   end
 
 end
