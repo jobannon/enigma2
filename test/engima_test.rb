@@ -1,8 +1,8 @@
 require_relative './test_helper'
 require_relative './../lib/enigma'
+require 'pry'
 
 class EnigmaTest < Minitest::Test
-
   def setup
     @enigma = Engima.new
   end
@@ -45,8 +45,19 @@ class EnigmaTest < Minitest::Test
 
   def test_get_rand
     # rand_num1 = mock("12345")
-    @enigma.expects(:get_rand).returns(12345)
-    assert_equal 12345, @enigma.get_rand
+    @enigma.expects(:get_rand).returns('12345')
+    binding.pry
+    assert_equal ('12345'), @enigma.get_rand
+  end
+
+  def test_get_keys
+    skip
+    @enigma.expects(:get_rand).returns('12345')
+    @enigma.get_keys
+  end
+
+  def test_shift
+    
   end
 
 end
