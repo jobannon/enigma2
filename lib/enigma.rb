@@ -1,11 +1,12 @@
 require 'date'
 require 'pry'
 require_relative './key'
+require_relative './offset'
 require_relative './../test/test_helper'
 
 class Engima
   #class to encrypt and decrypt
-  attr_reader :rand_num_array
+  attr_reader :rand_num_array, :shift_array #not sure I want to expose :shift_array for testing
   def initialize
     @alphabet = ("a".."z").to_a << " "
     @rand_num_array = []
@@ -18,7 +19,8 @@ class Engima
     keyholder = Key.new(key)
     offset = Offset.new
     offset.create_offsets(date)
-    create_shift_array(offset, keyholder)
+    shift_array = create_shift_array(offset, keyholder)
+    shift_message(message, shift_array)
     # message.chars.map do |char|
     #   (@alphabet.index[char] % 27 ) + shift_array.first
     #   shift_array.rotate %  4
@@ -27,11 +29,19 @@ class Engima
   end
 
   def create_shift_array(offset, keyholder)
-    binding.pry
     @shift_array << (offset.a_offset + keyholder.a_key)
     @shift_array << (offset.b_offset + keyholder.b_key)
     @shift_array << (offset.c_offset + keyholder.c_key)
     @shift_array << (offset.d_offset + keyholder.d_key)
+  end
+
+  def shift_message(message, shift_array)
+    ciper_message = message.chars.reduce([]) do |acc, message_char|
+      acc << @alphabet[((@alphabet.index(message_char) + @shift_array.first)%27)]
+      @shift_array.rotate!
+      acc
+    end
+    ciper_message.join
   end
 
   def decrypt(message, key, date = Date.now)
@@ -39,17 +49,6 @@ class Engima
 
   end
 
-  def get_keys
-    #get random number
-    get_rand
-    #enumerate over random number to generate keys
-    @a_shift = @rand_num_sum[0..1]
-    @b_shift = @rand_num_sum[1..2]
-    @c_shift = @rand_num_sum[2..3]
-    @d_shift = @rand_num_sum[3..4]
-
-    # rand_num_array.each do |rand_num|
-    #
-    # end
+  def create_ciper
   end
 end

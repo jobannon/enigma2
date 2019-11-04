@@ -47,5 +47,23 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_shift_array
+    expected = [3, 27, 73, 20]
+    date = "040895"
+    key = Key.new
+    offset = Offset.new
+    offset.create_offsets(date)
+    #*** this test needs revision
+    assert_equal expected, @enigma.create_shift_array(offset, key)
+  end
+
+  def test_shift_message
+    date = "040895"
+    key = Key.new
+    offset = Offset.new
+    offset.create_offsets(date)
+    @enigma.create_shift_array(offset, key)
+
+    assert_equal "keder ohulw", @enigma.shift_message("hello world", @enigma.shift_array)
+
   end
 end
