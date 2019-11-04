@@ -1,13 +1,15 @@
 require_relative './test_helper'
 require_relative './../lib/enigma'
+require_relative './../lib/key'
+require_relative './../lib/offset'
 require 'date'
-
-
 require 'pry'
 
 class EnigmaTest < Minitest::Test
   def setup
-    @enigma = Engima.new #(,key and offset)
+    @key_pass = Key.new
+    @offset_pass = Offset.new
+    @enigma = Engima.new(@key_pass, @offset_pass) #(,key and offset)
   end
 
   def test_it_exists
@@ -20,10 +22,10 @@ class EnigmaTest < Minitest::Test
       key: "02715",
       date: "040895"
       }
-    #test with 3 args
+    ##test with 3 args
     assert_equal expected, @enigma.encrypt("hello world", "02715", "040895")
 
-    #test with todays date
+    ##test with todays date
     expectedtoday = {
       encryption: "keder ohulw",
       key: "02715",
@@ -31,7 +33,7 @@ class EnigmaTest < Minitest::Test
       }
     assert_equal expectedtoday, @enigma.encrypt("hello world", "02715")
 
-    #test with random key and todays date
+    ##test with random key and todays date
     expected_today_and_random = {
 
     }
@@ -48,28 +50,21 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.decrypt("keder ohulw", "02715", "040895")
   end
 
-  def test_create_ciper
-    assert_equal "keder ohulw", @enigma.create_ciper("hello world")
-  end
-
   def test_shift_array
     expected = [3, 27, 73, 20]
     date = "040895"
-    key = Key.new
-    offset = Offset.new
-    offset.create_offsets(date)
+    @offset_pass.create_offsets(date)
+    this_key = Key.new("02715")
     #*** this test needs revision
-    assert_equal expected, @enigma.create_shift_array(offset, key)
+    assert_equal expected, @enigma.create_shift_array(@offset_pass, this_key)
   end
 
   def test_shift_message
     date = "040895"
-    key = Key.new
-    offset = Offset.new
-    offset.create_offsets(date)
-    @enigma.create_shift_array(offset, key)
+    this_key = Key.new("02715")
+    @offset_pass.create_offsets(date)
+    @enigma.create_shift_array(@offset_pass, this_key)
 
     assert_equal "keder ohulw", @enigma.shift_message("hello world", @enigma.shift_array)
-
   end
 end

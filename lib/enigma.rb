@@ -1,4 +1,5 @@
 require 'date'
+require_relative './key.rb'
 require_relative './../test/test_helper'
 
 class Engima
@@ -7,18 +8,24 @@ class Engima
   def initialize(key, offset)
     @alphabet = ("a".."z").to_a << " "
     @rand_num_array = []
-    @d_shift = 0
     @shift_array = []
     @keyholder = key
     @offset = offset
   end
 
-  def encrypt(message, key = Key.new, date = Date.now)
+  def encrypt(message, key = Key.new, date = Time.now.strftime("%d%m%Y"))
+    this_key = Key.new(key)
     message = message.downcase #per requirements
     @offset.create_offsets(date)
-    shift_array = create_shift_array(@offset, @keyholder)
-    shift_message(message, shift_array)
-    #returns hash {:encryption, :key, :date}
+    shift_array = create_shift_array(@offset, this_key)
+
+    # shift_message(message, shift_array)
+
+    this_back = {}
+    this_back[:encryption] = shift_message(message, shift_array)
+    this_back[:key] = key.rand_num_string
+    this_back[:date] = date
+    this_back
   end
 
   def create_shift_array(offset, keyholder)
