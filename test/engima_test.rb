@@ -1,10 +1,13 @@
 require_relative './test_helper'
 require_relative './../lib/enigma'
+require 'date'
+
+
 require 'pry'
 
 class EnigmaTest < Minitest::Test
   def setup
-    @enigma = Engima.new
+    @enigma = Engima.new #(,key and offset)
   end
 
   def test_it_exists
@@ -22,6 +25,9 @@ class EnigmaTest < Minitest::Test
 
     #test with todays date
     expectedtoday = {
+      encryption: "keder ohulw",
+      key: "02715",
+      date: Time.now.strftime("%d%m%Y")
       }
     assert_equal expectedtoday, @enigma.encrypt("hello world", "02715")
 
