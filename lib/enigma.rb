@@ -1,41 +1,42 @@
 require 'date'
+require 'pry'
 require_relative './key'
 require_relative './../test/test_helper'
 
 class Engima
   #class to encrypt and decrypt
-  attr_reader :rand_num_array, :a_shift, :b_shift, :c_shift, :d_shift
+  attr_reader :rand_num_array
   def initialize
     @alphabet = ("a".."z").to_a << " "
     @rand_num_array = []
-    @a_shift = 0
-    @b_shift = 0
-    @c_shift = 0
     @d_shift = 0
+    @shift_array = []
   end
 
   def encrypt(message, key = Key.new, date = Date.now)
-    create_ciper(message)
-    key
-
-
+    # create_ciper(message)
+    keyholder = Key.new(key)
+    offset = Offset.new
+    offset.create_offsets(date)
+    create_shift_array(offset, keyholder)
+    # message.chars.map do |char|
+    #   (@alphabet.index[char] % 27 ) + shift_array.first
+    #   shift_array.rotate %  4
+    # end
     #returns hash {:encryption, :key, :date}
+  end
+
+  def create_shift_array(offset, keyholder)
+    binding.pry
+    @shift_array << (offset.a_offset + keyholder.a_key)
+    @shift_array << (offset.b_offset + keyholder.b_key)
+    @shift_array << (offset.c_offset + keyholder.c_key)
+    @shift_array << (offset.d_offset + keyholder.d_key)
   end
 
   def decrypt(message, key, date = Date.now)
     #returns hash with three keys {:decryption, :key, :date}
 
-  end
-
-  def square_date
-  end
-
-  def get_rand
-    5.times do
-      rand_num = rand(5).to_s
-      @rand_num_sum = rand_num
-    end
-    @rand_num_sum
   end
 
   def get_keys
@@ -51,15 +52,4 @@ class Engima
     #
     # end
   end
-
-  def get_last_four
-  end
-
-  def create_four_keys
-  end
-
-  def create_ciper(message)
-    message
-  end
-
 end
