@@ -12,7 +12,6 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_encrypt
-    skip
     expected ={
       encryption: "keder ohulw",
       key: "02715",
@@ -43,26 +42,10 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, @enigma.decrypt("keder ohulw", "02715", "040895")
   end
 
-  def test_get_rand
-    skip
-    # rand_num1 = mock("12345")
-    @enigma.expects(:get_rand).returns('12345')
-    assert_equal ('12345'), @enigma.get_rand
-  end
-
-  # def test_get_keys
-  #   @enigma.expects(:get_rand).returns('12345')
-  #
-  #   binding.pry
-  #   assert_equal 12, @enigma.a_shift
-  #   assert_equal 23, @enigma.b_shift
-  #   assert_equal 34, @enigma.c_shift
-  #   assert_equal 45, @enigma.d_shift
-  #   @enigma.get_keys
-  # end
-
   def test_create_ciper
     assert_equal "keder ohulw", @enigma.create_ciper("hello world")
   end
 
+  def test_shift_array
+  end
 end
