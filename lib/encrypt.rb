@@ -10,7 +10,12 @@ message = file.readlines.first.strip
 file.close
 
 filewriter = File.open(ARGV[1], 'w')
-filewriter.write(enigma.encrypt(message,"02715", "040895"))
+encrypted_hash = enigma.encrypt(message,"02715", "040895")
+encrypted_hash[:encryption]
+filewriter.write(encrypted_hash[:encryption])
+puts "Created #{ARGV[1]} " +
+     "with the key #{encrypted_hash[:key]} " +
+     "and date #{encrypted_hash[:date]}"
 file.close
 
 
