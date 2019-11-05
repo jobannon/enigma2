@@ -1,8 +1,9 @@
 require 'date'
-require_relative './key.rb'
+require_relative './key'
+require_relative './Offset'
 require 'pry'
 
-class Engima
+class Enigma
   #class to encrypt and decrypt
   attr_reader :rand_num_array, :shift_array #not sure I want to expose :shift_array for testing
   def initialize
