@@ -9,7 +9,7 @@ class EnigmaTest < Minitest::Test
   def setup
     @key_pass = Key.new
     @offset_pass = Offset.new
-    @enigma = Engima.new(@key_pass, @offset_pass) #(,key and offset)
+    @enigma = Engima.new #(,key and offset)
   end
 
   def test_it_exists
@@ -24,8 +24,10 @@ class EnigmaTest < Minitest::Test
       }
     ##test with 3 args
     assert_equal expected, @enigma.encrypt("hello world", "02715", "040895")
+    #### test for date is today's
+    #### test 3 possiblity by length = message length
     # assert @enigma.offset.expects(:create_offsets)
-
+    #
     # ###test with todays date
     # expectedtoday = {
     #   encryption: expects,
@@ -51,6 +53,8 @@ class EnigmaTest < Minitest::Test
       date: "040895"
     }
     assert_equal expected, @enigma.decrypt("keder ohulw", "02715", "040895")
+    ## todays date
+    ##
   end
 
   def test_shift_array
