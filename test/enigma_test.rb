@@ -9,11 +9,11 @@ class EnigmaTest < Minitest::Test
   def setup
     @key_pass = Key.new
     @offset_pass = Offset.new
-    @enigma = Engima.new #(,key and offset)
+    @enigma = Enigma.new #(,key and offset)
   end
 
   def test_it_exists
-    assert_instance_of Engima, @enigma
+    assert_instance_of Enigma, @enigma
   end
 
   def test_encrypt
