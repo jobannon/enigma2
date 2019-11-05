@@ -5,11 +5,12 @@ require 'pry'
 class Offset
   attr_reader :a_offset, :b_offset, :c_offset, :d_offset
 
-  def initialize
+  def initialize(date = "emptyfornow", key = "emptyfornow")
   end
 
   def create_offsets(optional_date = Time.now.strftime("%d%m%Y") )
     # date = Time.now.strftime("%d%m%Y")
+    #this creates based on passed in date or todays
     squared_date = square_date(optional_date).to_s
     trimmed_squared_date = get_last_four(squared_date)
     @a_offset = trimmed_squared_date[0].to_i
@@ -25,7 +26,5 @@ class Offset
   def get_last_four(squared_date)
     squared_date[squared_date.length - 4...squared_date.length]
   end
-
-
 
 end

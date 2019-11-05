@@ -9,6 +9,7 @@ class KeyTest < Minitest::Test
 
   def test_it_has_attributes
     expected = 1 #not sure why cant do integer.new here
+    assert_instance_of Integer, @key.a_key
     assert_equal expected.class, @key.a_key.class
     assert_equal expected.class, @key.b_key.class
     assert_equal expected.class, @key.c_key.class
