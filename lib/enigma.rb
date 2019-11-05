@@ -5,12 +5,13 @@ require 'pry'
 class Engima
   #class to encrypt and decrypt
   attr_reader :rand_num_array, :shift_array #not sure I want to expose :shift_array for testing
-  def initialize(key, offset)
+  def initialize
     @alphabet = ("a".."z").to_a << " "
     @rand_num_array = []
     @shift_array = []
-    @keyholder = key
-    @offset = offset
+
+    @keyholder = Key.new
+    @offset = Offset.new
   end
 
   def encrypt(message, key = Key.new, date = Time.now.strftime("%d%m%Y"))
