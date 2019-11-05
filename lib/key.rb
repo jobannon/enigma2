@@ -1,25 +1,16 @@
 class Key
   attr_reader :rand_num_string, :a_key, :b_key, :c_key, :d_key
-  def initialize(given_key = 0)
-    @a_key = ""
-    @b_key = ""
-    @c_key = ""
-    @d_key = ""
-
-    if given_key == 0
-      create_num_string
-    else
-      @rand_num_string = given_key.to_s
-    end
+  def initialize(given_key = create_num_string)
+    @rand_num_string = given_key.to_s
     create_key
   end
 
   def create_num_string
+    rand_num_array = []
     5.times do
-      rand_num = rand(5).to_s
-      @rand_num_string = rand_num
+      rand_num_array << rand(5).to_s
     end
-    rand_num_string
+    rand_num_array.join
   end
 
   def create_key
