@@ -1,6 +1,6 @@
 require 'date'
 require_relative './key.rb'
-require_relative './../test/test_helper'
+require 'pry'
 
 class Engima
   #class to encrypt and decrypt
@@ -18,14 +18,23 @@ class Engima
     message = message.downcase #per requirements
     @offset.create_offsets(date)
     shift_array = create_shift_array(@offset, this_key)
+    {
+     :encryption => shift_message(message, shift_array),
+     :key => this_key.rand_num_string,
+     :date => date
+    }
+  end
 
-    # shift_message(message, shift_array)
-
-    this_back = {}
-    this_back[:encryption] = shift_message(message, shift_array)
-    this_back[:key] = key.rand_num_string
-    this_back[:date] = date
-    this_back
+  def decrypt(message, key, date = Date.now)
+    this_key = Key.new(key)
+    message = message.downcase #per requirements
+    @offset.create_offsets(date)
+    shift_array = create_shift_array(@offset, this_key)
+    {
+      :decryption => shift_message(message, shift_array, '-'),
+      :key => this_key.rand_num_string,
+      :date => date
+    }
   end
 
   def create_shift_array(offset, keyholder)
@@ -35,16 +44,12 @@ class Engima
     @shift_array << (offset.d_offset + keyholder.d_key)
   end
 
-  def shift_message(message, shift_array)
+  def shift_message(message, shift_array, operator = '+')
     ciper_message = message.chars.reduce([]) do |acc, message_char|
-      acc << @alphabet[((@alphabet.index(message_char) + @shift_array.first)%27)]
+      acc << @alphabet[((@alphabet.index(message_char).send(operator, @shift_array.first))%27)]
       @shift_array.rotate!
       acc
     end
     ciper_message.join
-  end
-
-  def decrypt(message, key, date = Date.now)
-    #returns hash with three keys {:decryption, :key, :date}
   end
 end
