@@ -8,9 +8,7 @@ class Offset
   def initialize(date = "emptyfornow", key = "emptyfornow")
   end
 
-  def create_offsets(optional_date = Time.now.strftime("%d%m%Y") )
-    # date = Time.now.strftime("%d%m%Y")
-    #this creates based on passed in date or todays
+  def create_offsets(optional_date = Time.now.strftime("%d%m%y") )
     squared_date = square_date(optional_date).to_s
     trimmed_squared_date = get_last_four(squared_date)
     @a_offset = trimmed_squared_date[0].to_i
