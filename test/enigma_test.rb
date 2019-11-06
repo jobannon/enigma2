@@ -24,18 +24,17 @@ class EnigmaTest < Minitest::Test
       }
     ##test with 3 args
     assert_equal expected, @enigma.encrypt("hello world", "02715", "040895")
-    #
-    # binding.pry
-    #
-    # Time.now.expects
-    # expected2 ={
-    #   encryption: "keder ohulw",
-    #   key: "02715",
-    #   date: Time.now.strftime("%d%m%Y"
-    #   }
-    # assert_equal self[:date] = Time.now.strftime("%d%m%Y") ,@enigma.encrypt("hello world", "02715")
-    #
-    # assert_equal
+############
+    time = mock('Time')
+    time.stubs(:strftime).returns'091119'
+    expected2 ={
+      encryption: "keder ohulw",
+      key: "02715",
+      date: Time.now.strftime("%d%m%Y")
+      }
+      binding.pry
+    assert_equal Time.now.strftime("%d%m%y"), @enigma.encrypt("hello world", "02715")[:date]
+
   end
 
   def test_decrypt
