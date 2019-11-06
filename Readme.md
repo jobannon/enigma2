@@ -44,7 +44,7 @@ Self assesement here
     <tr>
       <td><strong>Version Control</strong></td>
       <td>At least 40 commits. At least 15 pull requests that are named and documented to clearly communicate the purpose of the pull request. No commits include multiple pieces of functionality. No commit message is ambiguous.</td>
-      <td>At least 30 commits. At least 10 pull requests. No more than 3 commits include multiple pieces of functionality.</td>
+      <td>At least 30 commits. At least 10 pull requests. No more than 3 commits include multiple pieces of functionality.<strong> 40 commits.  A few maybe less than clear.  A few pull requests were murky, but mostly to the point. </strong></td>
       <td>20 - 30 commits. 5 - 9 pull requests. No more than 5 commits include multiple pieces of functionality.</td>
       <td>Less than 20 commits. Less than 5 pull requests. More than 5 commits include multiple pieces of functionality.</td>
     </tr>
