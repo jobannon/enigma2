@@ -9,24 +9,24 @@ class Enigma
     @alphabet = ("a".."z").to_a << " "
     @rand_num_array = []
     @shift_array = []
-
-    @keyholder = Key.new
     @offset = Offset.new
   end
 
-  def encrypt(message, key = Key.new, date = Time.now.strftime("%d%m%Y"))
-    this_key = Key.new(key)
+  def encrypt(message, income_key = Key.new, date = Time.now.strftime("%d%m%y"))
+    if income_key.class != Key
+      income_key = Key.new(income_key)
+    end
     message = message.downcase #per requirements
     @offset.create_offsets(date)
-    create_shift_array(@offset, this_key)
+    create_shift_array(@offset, income_key)
     {
      :encryption => shift_message(message, "+"),
-     :key => this_key.rand_num_string,
+     :key => income_key.rand_num_string,
      :date => date
     }
   end
 
-  def decrypt(message, key, date = Time.now.strftime("%d%m%Y"))
+  def decrypt(message, key, date = Time.now.strftime("%d%m%y"))
     this_key = Key.new(key)
     message = message.downcase #per requirements
     @offset.create_offsets(date)
@@ -46,16 +46,14 @@ class Enigma
   end
 
   def shift_message(message, operator)
-    bang_shift_array = @shift_array
-    ciper_message = message.chars.reduce([]) do |acc, message_char|
+    message.chars.reduce([]) do |acc, message_char|
       if !(@alphabet.include?(message_char))
         acc << message_char
       else
-        acc << @alphabet[((@alphabet.index(message_char).send(operator, bang_shift_array.first)) % 27)]
-        bang_shift_array.rotate!
+        acc << @alphabet[((@alphabet.index(message_char).send(operator, @shift_array.first)) % 27)]
+        @shift_array.rotate!
       end
       acc
-    end
-    ciper_message.join
+    end.join
   end
 end
