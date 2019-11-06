@@ -2,24 +2,17 @@
 require 'pry'
 require_relative './enigma'
 
-message_array = []
+enigma = Enigma.new
 file = File.open(ARGV[0], "r")
-file.readlines.each do |line|
-  message_array << line.chomp
-end
-binding.pry
+message = file.read
 file.close
 
-filewriter = File.open(ARGV[1], 'w')
-enigma = Enigma.new
-message_array.each_with_index do |message, i|
-  encrypted_hash = enigma.encrypt(message,"02715", "040895")
-  filewriter.write(encrypted_hash[:encryption])
-  filewriter.write("\n")
-  if i == (message_array.size - 1)
-    puts "Created #{ARGV[1]} " +
-         "with the key #{encrypted_hash[:key]} " +
-         "and date #{encrypted_hash[:date]}"
-  end
-end
+writer = File.open(ARGV[1], 'w')
+encrypted_hash = enigma.encrypt(message, "02715", "040895")
+# encrypted_hash = enigma.encrypt(message, ARGV[2], ARGV[3])
+
+writer.write(encrypted_hash[:encryption])
+puts "Created #{ARGV[1]} " +
+     "with the key #{encrypted_hash[:key]} " +
+     "and date #{encrypted_hash[:date]}"
 file.close
